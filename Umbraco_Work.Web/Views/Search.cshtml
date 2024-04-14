@@ -1,0 +1,84 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Search>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = "Main.cshtml";
+	var heroText = Model.Value<string>("heroTextColor");
+	
+	var searchQuery = Request.QueryString["query"];
+	IEnumerable<PublishedSearchResult> searchResults;
+	var resultsCount = 0;
+	
+	if (!string.IsNullOrEmpty(searchQuery)) {
+	    searchResults = Umbraco.ContentQuery.Search(searchQuery, string.Empty).Where(x => x.Content.IsDocumentType("newsArticle"));
+	    
+	    resultsCount = searchResults != null && searchResults.Any() ? searchResults.Count(): 0;
+	        
+	} else {
+	    searchResults = null;
+	}
+	
+	var imageUrl = string.Empty; 
+    if (Model.Value("heroImage") is MediaWithCrops imageObject)
+    {
+        imageUrl = imageObject.Url();
+    }
+}
+
+@if (!string.IsNullOrEmpty(heroText)) {
+    <style>
+        .home-hero {
+            color: #FFFFFF;
+            
+        }
+    </style>
+}
+
+
+
+<!--Render the seachbox-->
+
+<header class="jumbotron jumbotron-fluid home-hero" style="background-image:url('@imageUrl')">
+    <div class="overlay"></div>
+    <div class="inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <h1 class="text-white">Search</h1>
+                    <form action="/search/" method="Get">
+                        <fieldset>
+                            <input type="text" class="search-box" placeholder="Search..." name="query"></input>
+                            <button class="search-button">Search</button>
+                        </fieldset>
+                        
+                    </form>
+                </div>
+            </div>
+        
+        </div>               
+    </div>
+</header>
+<h1>Search</h1>
+
+@if (!string.IsNullOrEmpty(searchQuery)) {
+    <section>
+        @if (resultsCount == 0 || searchResults == null) {
+            <text>
+                No results were found for @searchQuery
+            </text>
+        } else {
+            <text>We found @resultsCount result(s)</text>
+            <ul>
+                @foreach(var result in searchResults) {
+                    <li>
+                        <h3>
+                            <a href="@result.Content.Url">@result.Content.Name</a>
+                        </h3>
+                    </li>
+                }
+            </ul>
+                
+        }
+    </section>
+}
+
+<!--Search result-->

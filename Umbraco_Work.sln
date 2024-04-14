@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco_Work.Web", "Umbraco_Work.Web\Umbraco_Work.Web.csproj", "{5FCE4B4E-86D4-4E5D-B834-8FFA4839357D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco_Work.Core", "Umbraco_Work.Core\Umbraco_Work.Core.csproj", "{DD89E7D8-033F-4622-B46B-248DBF04C73F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FCE4B4E-86D4-4E5D-B834-8FFA4839357D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FCE4B4E-86D4-4E5D-B834-8FFA4839357D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FCE4B4E-86D4-4E5D-B834-8FFA4839357D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FCE4B4E-86D4-4E5D-B834-8FFA4839357D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD89E7D8-033F-4622-B46B-248DBF04C73F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD89E7D8-033F-4622-B46B-248DBF04C73F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD89E7D8-033F-4622-B46B-248DBF04C73F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD89E7D8-033F-4622-B46B-248DBF04C73F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1A925A4-DA74-48D8-8CD6-4463EA7EFA9C}
+	EndGlobalSection
+EndGlobal

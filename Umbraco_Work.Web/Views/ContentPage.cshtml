@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.ContentPage>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = "Main.cshtml";
+	var heroText = Model.Value<string>("heroTextColor");
+}
+
+@if (!string.IsNullOrEmpty(heroText)) {
+    <style>
+        .home-hero .inner {
+            color: #@heroText;
+            
+        }
+    </style>
+}
+
+@Html.Partial("Hero")
+@Html.GetGridHtml(Model, "gridContent")
+

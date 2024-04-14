@@ -1,0 +1,43 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using Umbraco.Core.PropertyEditors.ValueConverters
+
+@{
+	var latestNews = Umbraco.Content(Guid.Parse("8b431a70-cc23-427f-94a9-17b9ea13c239"))
+    .ChildrenOfType("newsArticle")
+    .Where(x => x.IsVisible())
+    .Take(3);
+}
+
+
+ <div class="container">
+            <div class="row">
+                @foreach(var news in latestNews) {
+                    var imgCropper = news.Value<ImageCropperValue>("newsImage");
+                    var thumbUrl = imgCropper.Src + imgCropper.GetCropUrl("Thumb");
+                    
+                    <div class="card col mx-2 g-0 mt-4">
+                        <img class="card-img-top" src=@thumbUrl alt="Card image cap">
+                        <div class="card-body">
+                                <h5 class="card-title">@news.Value("newsName")</h5>
+                                <p class="card-text">@news.Value("newsLeadIn")</p>
+                                  
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">@news.Value("newsPostDate")</small>
+                                <a href="@news.Url">Visit</a>
+                            </div>
+                            <div class="d-flex justify-content-center social-icons text-muted">
+                                <a class="ms-2 me-2" href="https://twitter.com/intent/tweet?text=@news.Value("newsLeadIn")&amp;url=@news.Url(null, UrlMode.Absolute)"><i class="fab fa-twitter"></i></a>
+                                <a class="ms-2 me-2" href="https://www.facebook.com/sharer.php?u=@news.Url(null, UrlMode.Absolute)"><i class="fab fa-facebook"></i></a>
+                                <a class="ms-2 me-2" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=@news.Url(null, UrlMode.Absolute)"><i class="fab fa-linkedin"></i></a>
+                            
+                            
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+

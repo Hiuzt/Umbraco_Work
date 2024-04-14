@@ -1,0 +1,21 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@using Umbraco.Web.Models
+
+@{   
+    var imageUrl = string.Empty; 
+    if (Model.Value("heroImage") is MediaWithCrops imageObject)
+    {
+        imageUrl = imageObject.Url();
+    }
+}
+
+<div class="jumbotron jumbotron-fluid home-hero py-5" style="background-image:url(@imageUrl)">
+    <div class="overlay"></div>
+    <div class="inner">
+        <div class="container">
+            <h1 class="display-4">@Model.Value("heroTitle")</h1>
+            <p class="lead">@Model.Value("heroText")</p>
+        
+        </div>               
+    </div>
+</div>

@@ -1,0 +1,95 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.NewsArticle>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@using Umbraco.Core.PropertyEditors.ValueConverters;
+
+@{
+	Layout = "Main.cshtml";
+	
+	var imgCropper = Model.Value<ImageCropperValue>("newsImage");
+	var imgUrl = imgCropper.Src + imgCropper.GetCropUrl("Main");
+	var siteUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+	var relatedNews = Model.Value<IList<IPublishedContent>>("newsRelatedContent");
+}
+
+@section head
+{
+    <meta property="og:title" content="@Model.Name" />
+    <meta property="og:description" content="@Model.NewsLeadIn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="@siteUrl@Model.NewsImage" />
+}
+
+
+<article class="container">
+    <header class="text-center">
+        <div class="row">
+            <div class="col">
+                <h1 class="title-2 mt-5">@Model.Name</h1>
+                <div class="meta mb-5">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <i class="fa fa-user"></i>by @Model.NewsAuthor
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="fa fa-calender"></i>
+                            @Model.NewsPostDate.ToString("yyyy-MM-dd")
+                        </li>    
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="lead-in">
+                    @Model.NewsLeadIn
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img src=@imgUrl alt="" />
+            </div>
+        </div>
+    </header>
+    <div class="row">
+        <div class="col">
+            @Model.NewsContent
+        </div>
+    </div>
+</article>
+
+@if (relatedNews != null && relatedNews.Count > 0) {
+    <div class="container">
+        <div class="row">
+                <h2>Related news</h2>
+                @foreach (var data in relatedNews) {
+                    
+                    var thumbUrl = imgCropper.Src + imgCropper.GetCropUrl("Thumb");
+                    
+                    <div class="card col mx-2 g-0 mt-4">
+                        <img class="card-img-top" src=@thumbUrl alt="Card image cap">
+                        <div class="card-body">
+                                <h5 class="card-title">@data.Value("newsName")</h5>
+                                <p class="card-text">@data.Value("newsLeadIn")</p>
+                                  
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <small class="text-muted">@data.Value("newsPostDate")</small>
+                                <a href="@data.Url">Visit</a>
+                            </div>
+                            <div class="d-flex justify-content-center social-icons text-muted">
+                                <a class="ms-2 me-2" href="https://twitter.com/intent/tweet?text=@data.Value("newsLeadIn")&amp;url=@data.Url(null, UrlMode.Absolute)"><i class="fab fa-twitter"></i></a>
+                                <a class="ms-2 me-2" href="https://www.facebook.com/sharer.php?u=@data.Url(null, UrlMode.Absolute)"><i class="fab fa-facebook"></i></a>
+                                <a class="ms-2 me-2" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=@data.Url(null, UrlMode.Absolute)"><i class="fab fa-linkedin"></i></a>
+                            
+                            
+                            </div>
+                        </div>
+                    </div>
+                }
+            
+        </div>
+    </div>
+
+}
